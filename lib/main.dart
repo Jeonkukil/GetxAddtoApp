@@ -14,6 +14,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        scrollbarTheme: ScrollbarThemeData(
+          thumbColor: MaterialStateColor.resolveWith((states) {
+            return Colors.white;
+          })
+        )
       ),
       home: ShoppingPage(),
     );

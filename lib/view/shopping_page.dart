@@ -1,7 +1,11 @@
+import 'package:addto/controller/shopping_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ShoppingPage extends StatelessWidget {
-  const ShoppingPage({Key? key}) : super(key: key);
+
+  ShoppingPage({Key? key}) : super(key: key);
+  final shoppingController = Get.put(ShoppingController());
 
   @override
   Widget build(BuildContext context) {
@@ -10,42 +14,46 @@ class ShoppingPage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return Card(
-                  margin: EdgeInsets.all(12),
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: GetX<ShoppingController>(
+              builder: (controller) {
+                return ListView.builder(
+                  itemCount: controller.products.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      margin: EdgeInsets.all(12),
+                      child: Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${controller.products[index].productName}",
+                                      style: TextStyle(fontSize: 24),
+                                    ),
+                                    Text('${controller.products[index].productDescription}'),
+                                  ],
+                                ),
                                 Text(
-                                  "Product name",
+                                  "\$${controller.products[index].price}",
                                   style: TextStyle(fontSize: 24),
                                 ),
-                                Text('Product description'),
                               ],
                             ),
-                            Text(
-                              "\$30",
-                              style: TextStyle(fontSize: 24),
-                            ),
+                            ElevatedButton(
+                                onPressed: () {}, child: Text('Add to cart'))
                           ],
                         ),
-                        ElevatedButton(
-                            onPressed: () {}, child: Text('Add to cart'))
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 );
-              },
+              }
             ),
           ),
           SizedBox(height: 30),
